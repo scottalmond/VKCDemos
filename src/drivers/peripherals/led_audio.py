@@ -56,30 +56,38 @@ class LED:
 		self.pixels.show()
 	 
 	def build_test(self):
+		print("-- LED demo start --")
+		print("All LEDs Red")
 		self.pixels.fill((255, 0, 0)) #all red
 		self.pixels.show() #always need to flush changes live to hardware when done setting pixels
 		self.time.sleep(1) #wait 1 second
 	 
+		print("All LEDs Green")
 		self.pixels.fill((0, 255, 0)) #all green
 		self.pixels.show()
 		self.time.sleep(1)
 	 
+		print("All LEDs Blue")
 		self.pixels.fill((0, 0, 255)) #all blue
 		self.pixels.show()
 		self.time.sleep(1)
 	 
+		print("All LEDs White")
 		self.pixels.fill((255, 255, 255)) #all white
 		self.pixels.show()
 		self.time.sleep(1)
 	 
+		print("Rainbow")
 		self.rainbow_cycle(0.001)    # rainbow cycle with 1ms delay per step
 		
+		print("Binary counter")
 		RUN_TIME_SEC=5
 		time_start_sec=self.time.time()
 		while((time_start_sec+RUN_TIME_SEC)>self.time.time()):
 			self.display_time()
 		
 		self.pixels.fill((0, 0, 0)) #cleanup by turning all LEDs OFF
+		print("-- LED demo done --")
 		
 if __name__ == "__main__":
 	leds=LED(30)
