@@ -1,21 +1,19 @@
+#Class for reading/writing GPIO pins on RPi
+#RPi pinout: https://myelectronicslab.com/wp-content/uploads/2016/06/raspbery-pi-3-gpio-pinout-40-pin-header-block-connector-1-1.png
+#precon: execute "pip3 install wiringpi"
+#Python3 wrapper for WiringPi library: https://github.com/WiringPi/WiringPi-Python
+#Underlying WiringPi C library: http://wiringpi.com/
+#precon: beware assigning multiple pins to the same function, ex physcial pin 3 to both GPIO and I2C
 class Discrete:
-	def __init__(self):
+	def __init__(self,support):
 		#One design philosophy is to always separate your initialization code from
 		#  your class constructor so that you can call your initialization code
 		#  again later without having to create a new class instance
-		self.initInterface()
+		self.initInterface(support)
 		
-	def initInterface(self):
-		#I find it problematic to use the defaul Python approach of performing all imports
-		#globally (before the class definition).
-		#This causes confusion later in a large (especially multi-threaded) 
-		#projects when it's unclear which class is performing the import,
-		#what the scope of the library is, etc.  I favor performing the import explictly
-		#within the constructor and accessing it directly through self.<library>
-		import wiringpi as wpi
-		self.wpi=wpi
+	def initInterface(self,support):
+		self.wpi=support.wpi
 		#use physical pin numbering, ie pin 1 is 3.3V, pin 39 is ground, pin 7 is GPIO4
-		self.wpi.wiringPiSetupPhys()
 
 	#pin_number is pyhiscal pin number on RPi, ie pin 7 is GPIO4
 	#is_input is True for pins used to read inputs, false for sending signals as output
@@ -37,38 +35,47 @@ class Discrete:
 	def digitalWrite(self,pin_number,value):
 		self.wpi.digitalWrite(pin_number,value)
 
+	#LED 1: pin 1 (3.3V) to pin 39 (GND)
+	#LED 2: pin 7 (GPIO 4) to pin 39 (GND)
+	#LED 3: pin 11 (GPIO 7) to pin pin 16 (GPIO 23)
+	#LED 4: pin pin 16 (GPIO 23) to pin 11 (GPIO 7) 
 	def build_test(self):
 		print("-- Discrete demo start --")
-		
 		# -- configure --
 		import time
 		PIN_BLINK=7
 		PIN_TOGGLE_1=11
 		PIN_TOGGLE_2=16
-		discrete=Discrete()
-		discrete.pinMode(PIN_BLINK,False)
-		discrete.pinMode(PIN_TOGGLE_1,False)
-		discrete.pinMode(pin_number=PIN_TOGGLE_2,is_input=False)#Another more explicit way of passing parameters to methods in Python
+		self.pinMode(PIN_BLINK,False)
+		self.pinMode(PIN_TOGGLE_1,False)
+		self.pinMode(pin_number=PIN_TOGGLE_2,is_input=False)#Another more explicit way of passing parameters to methods in Python
 
 		print("-- Discrete blink LED demo --")
 		for iter in range(4):
-			discrete.digitalWrite(PIN_BLINK,1) #write 1 = 3.3V
+			self.digitalWrite(PIN_BLINK,1) #write 1 = 3.3V
+			print("  LED on PIN "+str(PIN_BLINK)+" is ON")
 			time.sleep(1) #sleep 1 second
-			discrete.digitalWrite(PIN_BLINK,0) #turn LED OFF
+			self.digitalWrite(PIN_BLINK,0) #turn LED OFF
+			print("  LED on PIN "+str(PIN_BLINK)+" is OFF")
 			time.sleep(1)
 			
 		print("-- Discrete toggle LED demo --")
 		for iter in range(4):
-			discrete.digitalWrite(PIN_TOGGLE_1,1)
-			discrete.digitalWrite(PIN_TOGGLE_2,0)
+			self.digitalWrite(PIN_TOGGLE_1,1)
+			self.digitalWrite(PIN_TOGGLE_2,0)
+			print("  Toggle 1 is ON,  Toggle 2 is OFF")
 			time.sleep(1)
-			discrete.digitalWrite(PIN_TOGGLE_1,0)
-			discrete.digitalWrite(PIN_TOGGLE_2,1)
+			self.digitalWrite(PIN_TOGGLE_1,0)
+			self.digitalWrite(PIN_TOGGLE_2,1)
+			print("  Toggle 1 is OFF, Toggle 2 is ON")
 			time.sleep(1)
 			
+		#TODO: add button reading (input) to this demo
+			
 		# -- clean up --
-		discrete.digitalWrite(PIN_TOGGLE_1,0)
-		discrete.digitalWrite(PIN_TOGGLE_2,0)
+		self.digitalWrite(PIN_TOGGLE_1,0)
+		self.digitalWrite(PIN_TOGGLE_2,0)
+		print("  All LEDs are OFF")
 		print("-- Discrete demo done --")
 		
 
@@ -76,5 +83,7 @@ class Discrete:
 #  from the command line, but not when another Python class
 #  "import Discrete from Discrete"
 if __name__ == "__main__":
-	discrete=Discrete()
+	from support_library import Support
+	support=Support()
+	discrete=Discrete(support)
 	discrete.build_test()
