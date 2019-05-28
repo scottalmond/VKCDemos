@@ -27,8 +27,12 @@ if [[ 0 ]]; then
   $apti libavutil-dev libavcodec-dev libavformat-dev libsdl2-dev
   $apti libpython3-dev python3-pip python3-smbus python3-venv python3-gi python3-gi-cairo gir1.2-gtk-3.0
   $apti liblapack3 libclbas3 libatlas3 libatlas3-base libjasper1 openexr libswscale4 libqtgui4 libqt4-test
-
-  $apti gstreamer1.0-tools gstreamer1.0-omx-rpi gstreamer1.0-plugins-{base,good}
+  $apti python-gi python3-gi \
+    gstreamer1.0-tools \
+    gir1.2-gstreamer-1.0 \
+    gir1.2-gst-plugins-base-1.0 \
+    gstreamer1.0-libav
+  $apti gstreamer1.0-tools gstreamer1.0-omx-rpi gstreamer1.0-plugins-{base,good,ugly,bad}
 fi
 
 usermod -a -G i2c pi
