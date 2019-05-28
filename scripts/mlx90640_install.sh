@@ -1,5 +1,8 @@
 #!/bin/bash
 
+: ${do_updates:=false}
+: ${do_installs:=true}
+
 if [ `whoami` != 'root' ] ; then
 	echo "must be root"
 	exit
@@ -14,13 +17,13 @@ export DEBIAN_FRONTEND=noninteractive
 aptq="apt-get -qq --assume-yes"
 apti="$aptq install"
 
-if [[ 0 ]] ; then
+if [[ $do_updates ]] ; then
   echo Lets update
   $aptq update
   $aptq dist-upgrade
 fi
 
-if [[ 0 ]]; then
+if [[ $do_installs ]]; then
   echo Lets install some files
   $apti read-edid i2c-tools wiringpi git vim
   $apti libgirepository-1.0 gir1.2-glib

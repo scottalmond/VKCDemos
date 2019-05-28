@@ -21,7 +21,7 @@ There is a install script that should (currently)
  * Install the dependancies
  * Setup I2C
  * Build the library and install the python library
- * Setup a python vertual environmnet `~/vkc-demo`
+ * Setup a [python virtual environment][py-venv] in `~/vkc-demo`
 
 Run the install script by:
 ~~~
@@ -40,3 +40,6 @@ sudo ./mlx906640.sh
 [mlx90640-ref]:    https://www.sparkfun.com/products/14844
 [mlx90640-lib]:    https://github.com/pimoroni/mlx90640-library
 [mlx90640-hookup]: https://learn.sparkfun.com/tutorials/qwiic-ir-array-mlx90640-hookup-guide/all
+[py-venv]:         https://docs.python.org/3/library/venv.html
+
+
