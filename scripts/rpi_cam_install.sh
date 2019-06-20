@@ -5,8 +5,8 @@
 checkroot
 doing_updates
 
-echo Enabling i2c
-$rcn do_i2c 0
+echo Enabling Camera
+$rcn do_camera 0
 
 if [[ $do_installs == true ]]; then
   echo Lets install some files
@@ -21,28 +21,24 @@ if [[ $do_installs == true ]]; then
     gir1.2-gst-plugins-base-1.0 \
     gstreamer1.0-libav
   $apti gstreamer1.0-tools gstreamer1.0-omx-rpi gstreamer1.0-plugins-{base,good,ugly,bad}
+  $apti gstreamer1.0-omx-rpi-config gstreamer1.0-omx
+
+  $apti uvcdynctrl
 fi
 
-usermod -a -G i2c pi
-echo dtparam=i2c1_baudrate=1000000 >> /boot/config.txt
-
-pushd ${VKCDemo_src}/libs/mlx90640-library/
-make I2C_MODE=LINUX
-popd
+if ! grep -q bcm2835-v4l2 /etc/modules ; then
+    echo bcm2835-v4l2 >> /etc/modules
+fi
 
 function setup_vkc_python_env() {
 if [ ! -d ${pyvenv_dir} ] ; then
+	echo creating environment
     pyvenv-3.5 --system-site-packages ${pyvenv_dir}
 fi
 
 . ${pyvenv_dir}/bin/activate
 
-pip install opencv-python Pillow
-
-pushd ${VKCDemo_src}/libs/mlx90640-library/python/library/
-make
-python setup.py install --prefix=~/vkc-demo
-popd
+pip install opencv-python Pillow "picamera[array]"
 
 deactivate
 
