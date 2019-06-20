@@ -1,3 +1,11 @@
+# Software
+Software is installed on the Raspberry Pi. Login to the Raspberry Pi 
+
+~~~
+git clone https://github.com/scottalmond/VKCDemos.git
+git submodule update --init --recursive
+~~~
+
 # VKCDemos
 
 ## MLX90640
@@ -5,16 +13,10 @@ This is an overview of installing and using the [MLX90640][mlx90640-ref]. This e
 
 ### Hook-up
 
-#### Wires
+#### Wires for I2C 
 [<img src="docs/MLX90640_and_RPi.png" width=300>][mlx90640-hookup]
 
-#### Software
-Software is installed on the Raspberry Pi. Login to the Raspberry Pi 
-
-~~~
-git clone https://github.com/scottalmond/VKCDemos.git
-git submodule update --init --recursive
-~~~
+#### Install MLX90640 Software
 
 There is a install script that should (currently)
 
