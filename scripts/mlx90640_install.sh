@@ -2,6 +2,8 @@
 
 . common.sh
 
+: ${use_egg:=false}
+
 checkroot
 doing_updates
 
