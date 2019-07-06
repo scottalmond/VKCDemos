@@ -2,7 +2,8 @@
 
 . common.sh
 
-: ${use_egg:=false}
+: ${use_whl:=false}
+export use_whl
 
 checkroot
 doing_updates
@@ -50,10 +51,14 @@ fi
 python -m pip install --user pip
 python -m pip install opencv-python Pillow
 
-pushd ${VKCDemos_src}/libs/mlx90640-library/python/library/
-make
-python setup.py install --prefix=${pyvenv_dir}
-popd
+if [[ ${use_whl} == true ]] ; then
+  python -m pip install ${VKCDemos_src}/scripts/python-pkgs/MLX90640-0.0.2-cp35-none-linux_armv7l.whl
+else
+  pushd ${VKCDemos_src}/libs/mlx90640-library/python/library/
+  make
+  python setup.py install --prefix=${pyvenv_dir}
+  popd
+fi
 
 deactivate
 
