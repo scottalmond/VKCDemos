@@ -11,8 +11,46 @@ git submodule update --init --recursive
 
 # VKCDemos
 
+## Raspberry Pi Camera
+This is a brief overview of [using][rpi-cam-proj] the [Raspberry Pi Camera][rpi-cam-link]. 
+
+### Usage
+
+~~~
+~/vkc-demo/bin/activate
+cd src/drivers/peripherals/
+python ./rpi_cam.py
+~~~
+
+### Hook-up
+Connect the ribbon cable
+
+#### Configure the Raspberry Pi Camera
+
+There is a install script that should (currently)
+
+ * Install the dependancies
+ * Setup the camera
+ * Setup a [python virtual environment][py-venv] in `~/vkc-demo`
+    - Installs OpenCV for python
+
+Run the install script by:
+~~~
+cd scripts
+sudo rpi_cam_install.sh
+~~~
+Finally, reboot.
+
 ## MLX90640
 This is an overview of installing and using the [MLX90640][mlx90640-ref]. This example uses [this][mlx90640-lib] Library.
+
+
+### Usage
+
+~~~
+cd src/drivers/peripherals/
+sudo ./mlx906640.sh
+~~~
 
 ### Hook-up
 
@@ -43,6 +81,8 @@ sudo ./mlx906640.sh
 ~~~
 
 [rpi-rasp-dl]:     https://www.raspberrypi.org/downloads/raspbian/
+[rpi-cam-proj]:    https://projects.raspberrypi.org/en/projects/getting-started-with-picamera
+[rpi-cam-link]:    https://www.raspberrypi.org/products/pi-noir-camera-v2/
 [mlx90640-ref]:    https://www.sparkfun.com/products/14844
 [mlx90640-lib]:    https://github.com/pimoroni/mlx90640-library
 [mlx90640-hookup]: https://learn.sparkfun.com/tutorials/qwiic-ir-array-mlx90640-hookup-guide/all
