@@ -2,7 +2,7 @@
 
 . common.sh
 
-: ${use_whl:=false}
+: ${use_whl:=true}
 export use_whl
 
 checkroot
