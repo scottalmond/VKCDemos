@@ -15,6 +15,7 @@ git submodule update --init --recursive
 This is a brief overview of [using][rpi-cam-proj] the [Raspberry Pi Camera][rpi-cam-link]. 
 
 ### Usage
+The example included script detects circles. 
 
 ~~~
 ~/vkc-demo/bin/activate
