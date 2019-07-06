@@ -6,10 +6,10 @@
 export do_updates
 export do_installs
 
-: ${VKCDemo_src:=/home/pi/src/VKCDemo}
+: ${VKCDemos_src:=/home/pi/src/VKCDemos}
 : ${pyvenv_dir:=/home/pi/vkc-demo}
 
-export VKCDemo
+export VKCDemos_src
 export pyvenv_dir
 
 : ${apt_qq:=false}
