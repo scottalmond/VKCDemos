@@ -1,45 +1,48 @@
 # 7/7/19
 Commands:
-cd VKCDemos
-git submodule update --init --recursive
-cd scripts
-sudo ./rpi_cam_install.sh
-sudo reboot now
-cd scripts
-sudo ./mlx90640_install.sh
-sudo reboot now
-raspistill -o cam.jpg //camera works as expected
-//rpi_cam.py: changed "import queue" to "from multiprocessing import Queue"
-cd periphreals
-python ./rpi_cam.py //live video feed highlighting one or more small circles with pirple ring and gray center mark
-python3 ./rpi_cam.py //import cv2, ImportError: numpy.core.multiarray failed to import
-sudo i2cdetect -y 1 //finds 0x33
-sudo ./mlx90640.sh //only reports error
-// Traceback (most recent call last):
-//   File "mlx90640.py", line 40, in <module>
-//     main(sys.argv[1:])
-//   File "mlx90640.py", line 29, in main
-//     img[h][w] = temp_to_col(val)
-//   File "mlx90640.py", line 10, in temp_to_col
-//     return [int(c*255) for c in colorsys.hsv_to_rgb(hue % 1, 1.0, 1.0)]
-//   File "/usr/lib/python3.5/colorsys.py", line 146, in hsv_to_rgb
-//     i = int(h*6.0) # XXX assume int() truncates!
-// ValueError: cannot convert float NaN to integer
-sudo i2cdetect -y 1 //only finds 0x03
-sudo i2cdetect -y 1 //finds no devices on second call
-//however, running a non-python library indicates sensor is alive: https://github.com/abood91/RPiMLX90640
-
-
+~~~console
+$ cd VKCDemos
+$ git submodule update --init --recursive
+$ cd scripts
+$ sudo ./rpi_cam_install.sh
+$ sudo reboot now
+$ cd scripts
+$ sudo ./mlx90640_install.sh
+$ sudo reboot now
+$ raspistill -o cam.jpg # camera works as expected # rpi_cam.py: changed "import queue" to "from multiprocessing import Queue"
+$ cd periphreals
+$ python ./rpi_cam.py # live video feed highlighting one or more small circles with pirple ring and gray center mark
+$ python3 ./rpi_cam.py
+import cv2, ImportError: numpy.core.multiarray failed to import
+$ sudo i2cdetect -y 1
+finds 0x33
+$ sudo ./mlx90640.sh # only reports error
+ Traceback (most recent call last):
+   File "mlx90640.py", line 40, in <module>
+     main(sys.argv[1:])
+   File "mlx90640.py", line 29, in main
+     img[h][w] = temp_to_col(val)
+   File "mlx90640.py", line 10, in temp_to_col
+     return [int(c*255) for c in colorsys.hsv_to_rgb(hue % 1, 1.0, 1.0)]
+   File "/usr/lib/python3.5/colorsys.py", line 146, in hsv_to_rgb
+     i = int(h*6.0) # XXX assume int() truncates!
+ ValueError: cannot convert float NaN to integer
+$ sudo i2cdetect -y 1 
+only finds 0x03
+$ sudo i2cdetect -y 1 
+finds no devices on second call
+~~~
+however, running a non-python library indicates sensor is alive: https://github.com/abood91/RPiMLX90640
 
 # Software
 Software is installed on the Raspberry Pi. Fetch the image and install according from [raspberrypi.org][rpi-rasp-dl]. This demo is using the "Raspbian Stretch with desktop" Image. Once installed, login to the Raspberry Pi and then fetch the source
 
-~~~
-mkdir src
-cd src
-git clone https://github.com/scottalmond/VKCDemos.git
-cd VKCDemos
-git submodule update --init --recursive
+~~~console
+$ mkdir src
+$ cd src
+$ git clone https://github.com/scottalmond/VKCDemos.git
+$ cd VKCDemos
+$ git submodule update --init --recursive
 ~~~
 
 # VKCDemos
@@ -50,10 +53,10 @@ This is a brief overview of [using][rpi-cam-proj] the [Raspberry Pi Camera][rpi-
 ### Usage
 The example included script detects circles. 
 
-~~~
-~/vkc-demo/bin/activate
-cd src/drivers/peripherals/
-python ./rpi_cam.py
+~~~console
+$ ~/vkc-demo/bin/activate
+$ cd src/drivers/peripherals/
+$ python ./rpi_cam.py
 ~~~
 
 ### Hook-up
@@ -69,9 +72,9 @@ There is a install script that should (currently)
     - Installs OpenCV for python
 
 Run the install script by:
-~~~
-cd scripts
-sudo ./rpi_cam_install.sh
+~~~console
+$ cd scripts
+$ sudo ./rpi_cam_install.sh
 ~~~
 Finally, reboot.
 
@@ -81,9 +84,9 @@ This is an overview of installing and using the [MLX90640][mlx90640-ref]. This e
 
 ### Usage
 
-~~~
-cd src/drivers/peripherals/
-sudo ./mlx90640.sh
+~~~console
+$ cd src/drivers/peripherals/
+$ sudo ./mlx90640.sh
 ~~~
 
 ### Hook-up
@@ -101,17 +104,17 @@ There is a install script that should (currently)
  * Setup a [python virtual environment][py-venv] in `~/vkc-demo`
 
 Run the install script by:
-~~~
-cd scripts
-sudo ./mlx90640_install.sh
+~~~console
+$ cd scripts
+$ sudo ./mlx90640_install.sh
 ~~~
 Finally, reboot.
 
 ### Usage
 
-~~~
-cd src/drivers/peripherals/
-sudo ./mlx906640.sh
+~~~console
+$ cd src/drivers/peripherals/
+$ sudo ./mlx906640.sh
 ~~~
 
 [rpi-rasp-dl]:     https://www.raspberrypi.org/downloads/raspbian/
