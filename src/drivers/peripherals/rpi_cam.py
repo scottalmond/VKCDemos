@@ -2,7 +2,8 @@ import sys
 import cv2
 import numpy as np
 
-import queue
+#import queue
+from multiprocessing import Queue
 
 import pprint
 
