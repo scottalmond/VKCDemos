@@ -31,6 +31,79 @@ $ sudo i2cdetect -y 1
 only finds 0x03
 $ sudo i2cdetect -y 1 
 finds no devices on second call
+--- 7/9/19 ---
+$ ~/vkc-demo/bin/activate
+bash: /home/pi/vkc-demo/bin/activate: Permission denied
+-- right-click /home/pi/vkc-demo/bin/activate
+-- set run premission to "only owner"
+$ ~/vkc-demo/bin/activate
+-- no error
+$ cd /home/pi/Documents/VKCDemos/src/drivers/peripherals/
+$ sudo ./mlx90640.sh
+Retries: 9 
+Got data for page 1
+Converting data for page 1
+Retries: 8 
+Got data for page 0
+Converting data for page 0
+Finishing
+Traceback (most recent call last):
+  File "mlx90640.py", line 40, in <module>
+    main(sys.argv[1:])
+  File "mlx90640.py", line 29, in main
+    img[h][w] = temp_to_col(val)
+  File "mlx90640.py", line 10, in temp_to_col
+    return [int(c*255) for c in colorsys.hsv_to_rgb(hue % 1, 1.0, 1.0)]
+  File "/usr/lib/python3.5/colorsys.py", line 146, in hsv_to_rgb
+    i = int(h*6.0) # XXX assume int() truncates!
+ValueError: cannot convert float NaN to integer
+$ sudo i2cdetect -y 1 
+$ sudo i2cdetect -y 1 
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          03 -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --                         
+$ sudo i2cdetect -y 1 
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --                       
+$ cd /home/pi/Documents/ir_cam1/RPiMLX90640
+-- swap to c-code test script
+$ sudo ./MLX90640 10 > temp2.txt
+-- successful read back: /docs/ir_test_hand.png
+$ sudo i2cdetect -y 1 
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          03 -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --                   
+$ sudo i2cdetect -y 1 
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --                       
+
+
 ~~~
 however, running a non-python library indicates sensor is alive: https://github.com/abood91/RPiMLX90640
 
