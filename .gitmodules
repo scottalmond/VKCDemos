@@ -1,3 +1,6 @@
 [submodule "libs/mlx90640-library"]
 	path = libs/mlx90640-library
 	url = https://github.com/pimoroni/mlx90640-library
+[submodule "src/drivers/peripherals/Adafruit_Python_LED_Backpack"] 
+	path = src/drivers/peripherals/Adafruit_Python_LED_Backpack
+	url = https://github.com/adafruit/Adafruit_Python_LED_Backpack
