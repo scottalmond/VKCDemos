@@ -34,48 +34,62 @@ class Discrete:
 	#Precon: pin must first be declared an output before using this method
 	def digitalWrite(self,pin_number,value):
 		self.wpi.digitalWrite(pin_number,value)
+		
+	#precon: pin must first be declared an input
+	def digitalRead(self,pin_number):
+		return self.wpi.digitalRead(pin_number)
 
+	#ref. https://www.jameco.com/Jameco/workshop/circuitnotes/raspberry_pi_circuit_note_fig2a.jpg
 	#LED 1: pin 1 (3.3V) to pin 39 (GND)
 	#LED 2: pin 7 (GPIO 4) to pin 39 (GND)
-	#LED 3: pin 11 (GPIO 7) to pin pin 16 (GPIO 23)
-	#LED 4: pin pin 16 (GPIO 23) to pin 11 (GPIO 7) 
+	#LED 3: pin 11 (GPIO 17) to pin 39 (GND)
+	#Button 1: pin 16 (GPIO 23)
+	#Button 2: pin 18 (GPIO 24)
+	#//LED 3: pin 11 (GPIO 7) to pin pin 16 (GPIO 23)
+	#//LED 4: pin pin 16 (GPIO 23) to pin 11 (GPIO 7) 
 	def build_test(self):
 		print("-- Discrete demo start --")
 		# -- configure --
 		import time
-		PIN_BLINK=7
-		PIN_TOGGLE_1=11
-		PIN_TOGGLE_2=16
-		self.pinMode(PIN_BLINK,False)
-		self.pinMode(PIN_TOGGLE_1,False)
-		self.pinMode(pin_number=PIN_TOGGLE_2,is_input=False)#Another more explicit way of passing parameters to methods in Python
-
-		print("-- Discrete blink LED demo --")
-		for iter in range(4):
-			self.digitalWrite(PIN_BLINK,1) #write 1 = 3.3V
-			print("  LED on PIN "+str(PIN_BLINK)+" is ON")
-			time.sleep(1) #sleep 1 second
-			self.digitalWrite(PIN_BLINK,0) #turn LED OFF
-			print("  LED on PIN "+str(PIN_BLINK)+" is OFF")
-			time.sleep(1)
+		PIN_LED_1=7
+		PIN_LED_2=11
+		PIN_BUTTON_1=16
+		PIN_BUTTON_2=18
+		self.pinMode(pin_number=PIN_LED_1,is_input=False,is_pull_up=None)
+		self.pinMode(pin_number=PIN_LED_2,is_input=False,is_pull_up=None)
+		self.pinMode(pin_number=PIN_BUTTON_1,is_input=True,is_pull_up=True)
+		self.pinMode(pin_number=PIN_BUTTON_2,is_input=True,is_pull_up=True)
 			
 		print("-- Discrete toggle LED demo --")
 		for iter in range(4):
-			self.digitalWrite(PIN_TOGGLE_1,1)
-			self.digitalWrite(PIN_TOGGLE_2,0)
+			self.digitalWrite(PIN_LED_1,1)
+			self.digitalWrite(PIN_LED_2,0)
 			print("  Toggle 1 is ON,  Toggle 2 is OFF")
 			time.sleep(1)
-			self.digitalWrite(PIN_TOGGLE_1,0)
-			self.digitalWrite(PIN_TOGGLE_2,1)
+			self.digitalWrite(PIN_LED_1,0)
+			self.digitalWrite(PIN_LED_2,1)
 			print("  Toggle 1 is OFF, Toggle 2 is ON")
+			time.sleep(1)
+			self.digitalWrite(PIN_LED_1,0)
+			self.digitalWrite(PIN_LED_2,0)
+			print("  Toggle 1 is OFF, Toggle 2 is OFF")
 			time.sleep(1)
 			
 		#TODO: add button reading (input) to this demo
 			
 		# -- clean up --
-		self.digitalWrite(PIN_TOGGLE_1,0)
-		self.digitalWrite(PIN_TOGGLE_2,0)
+		self.digitalWrite(PIN_LED_1,0)
+		self.digitalWrite(PIN_LED_2,0)
 		print("  All LEDs are OFF")
+		
+		print("  Press breadboard buttons to control lights (Ctrl+C to exit)")
+		while(True):
+			#buttons have an internal pull-up
+			#  they will read 1 if the button is NOT pressed, and 0 when pressed
+			#  so to have LED respond when button is pressed, negate the result of a button read operation
+			self.digitalWrite(PIN_LED_1,not self.digitalRead(PIN_BUTTON_1))
+			self.digitalWrite(PIN_LED_2,not self.digitalRead(PIN_BUTTON_2))
+		
 		print("-- Discrete demo done --")
 		
 

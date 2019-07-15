@@ -75,7 +75,9 @@ data_max=max(fft_out[0:num_el])
 data_max_index=list(fft_out).index(data_max)
 freq_max=x_axis[data_max_index] #red 438 [A4], green 782 [G5 {261, C4, third harmonic}], blue 391 [G4], white: 440+522+784 [A4+C5+G5], yellow: 522+440 C5+A4, cyan: 391+783 G4+G5, purple: 782+440 A4+G5
 print("Frequency: "+str(freq_max)+" Hz")
+print("Ctrl+C to exit")
 from math import log
 fft_out_log=[20*log(y,10) for y in fft_out]
 plt.plot(x_axis[0:num_el], fft_out_log[0:num_el])
 plt.show()
+
