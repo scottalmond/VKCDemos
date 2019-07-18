@@ -129,7 +129,7 @@ The example included script detects circles.
 ~~~console
 $ ~/vkc-demo/bin/activate
 $ cd src/drivers/peripherals/
-$ python ./rpi_cam.py
+$ python ./vis_camera_csi2.py
 ~~~
 
 ### Hook-up
