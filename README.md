@@ -6,7 +6,7 @@ The code below shows how the devices can be installed using NOOBS 3.2.0 and Pyth
 
 ## Hardware setup
 
-[<img src="docs/fritzing/demo_box_bb.png" width=300>][demo-box-hookup]
+<img src="docs/fritzing/demo_box_bb.png" width=300>
 
 ## Software
 

@@ -165,7 +165,8 @@ $ sudo ./mlx90640.sh
 ### Hook-up
 
 #### Wires for I2C 
-[<img src="docs/MLX90640_and_RPi.png" width=300>][mlx90640-hookup]
+<img src="docs/MLX90640_and_RPi.png" width=300>
+https://github.com/scottalmond/VKCDemos/blob/master/docs/fritzing/demo_box_bb.png
 
 #### Install MLX90640 Software
 
