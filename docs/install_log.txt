@@ -77,6 +77,29 @@ ensure camera cable is connected correctly
 pi@raspberrypi: sudo ./mlx90640_install.sh
 encounters several errors
 
+pi@raspberrypi: cd /home/pi/Documents/VKCDemos/src/drivers/peripherals/
+pi@raspberrypi: python3 a_lwir_camera_i2c.py
+* recording
+* done recording
+>> A window opens with the frequency spectrum
+Peak Frequency: 0.0 Hz
+Ctrl+C to exit
+pi@raspberrypi: python3 discrete_gpio.py 
+>> LED turns ON with laser OFF, LED turns OFF with laser ON, LED and laser are OFF, cycle repeats
+pi@raspberrypi: python3 distance_uart.py 
+>> a series of distance measurements appears in the terminal, waving a hand over the TFMini distance sensor makes the numbers decrease in proportion to distance to target
+pi@raspberrypi: sudo python3 led_pwm-dma.py 
+>> Note that "sudo" is needed to execute code
+>> red, blue, green, white, then slow rainbow transition, followed by counter demo, lights turn OFF at end
+pi@raspberrypi: python3 servo_i2c.py
+>> one servo moves left-and-right, then the other, lastly the LED iterates through multiple brightness levels before turning OFF
+pi@raspberrypi: python3 vis_camera_csi2.py
+>> after ~10-20 seconds (cv2 library loading?) a window opens with a live video feed of the camera, the script wil flag circle by drawing a purple circle where it sees them
+cd /home/pi/Documents/VKCDemos/src/drivers/peripherals/Adafruit_Python_LED_Backpack/examples/
+pi@raspberrypi: python3 alphanum4_test.py
+>> the display will show various text and numeric values changing at 1 Hz or faster
+
+
 
 
 
