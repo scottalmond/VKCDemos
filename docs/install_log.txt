@@ -1,0 +1,82 @@
+Raspbian under NOOBS 3.2.0
+
+pi@raspberrypi:python3 -V
+Python 3.7.3
+pi@raspberrypi:cd /home/pi/Documents
+pi@raspberrypi:git clone https://github.com/scottalmond/VKCDemos.git
+pi@raspberrypi:cd /home/pi/Documents/VKCDemos/src/drivers/peripherals
+pi@raspberrypi:~/Documents/VKCDemos/src/drivers/peripherals $ python3 rpi_cam.py 
+Traceback (most recent call last):
+  File "rpi_cam.py", line 2, in <module>
+    import cv2
+ModuleNotFoundError: No module named 'cv2'
+
+>> Preferences >> Raspberry Pi Configuration >> Interfaces
+>> Camera >> Enable
+>> SSH >> Enable
+>> SPI >> Enable
+>> I2C >> Enable
+(?) >> Serial Port >> Enable
+(?) >> Serial Console >> Disable
+
+Reboot to save settings
+
+Set Google as default search engine on chrome
+Set default Python editor as Geany
+
+pi@raspberrypi:sudo i2cdetect -y 1
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- 33 -- -- -- -- -- -- -- -- -- -- -- -- 
+40: 40 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: 70 -- -- -- -- -- -- --   
+
+0x33 is IR camera
+0x40 is Servo Motor
+0x70 is quad 7 segment display
+
+pi@raspberrypi:sudo apt-get update
+pi@raspberrypi:sudo apt-get upgrade
+
+pi@raspberrypi:~/Documents/VKCDemos $ git submodule update --init --recursive
+pi@raspberrypi:~/Documents/VKCDemos $ pip3 install wiringpi
+pi@raspberrypi:~/Documents/VKCDemos $ sudo apt-get install python3-pyaudio
+pi@raspberrypi:~/Documents/VKCDemos $ sudo apt-get install python3-scipy
+pi@raspberrypi:~/Documents/VKCDemos $ sudo apt-get install build-essential python3-dev python3-smbus python3-pil git
+
+note that python-imaging has been replaced with python3-pil for Python3.7
+
+pi@raspberrypi:~/Documents/VKCDemos $ cd ~/VKCDemos/src/drivers/peripherals/Adafruit_Python_LED_Backpack/
+pi@raspberrypi: sudo python3 setup.py install
+
+pi@raspberrypi: sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
+
+pi@raspberrypi: cd /home/pi/Documents/VKCDemos/scripts/
+pi@raspberrypi: sudo ./rpi_cam_install.sh
+pi@raspberrypi: sudo reboot now
+pi@raspberrypi: sudo apt-get install python3-opencv
+pi@raspberrypi: python3
+>>>import cv2
+>>>cv2.__version__
+'3.2.0'
+>>>quit()
+pi@raspberrypi: raspistill -o cam.jpg
+mmal: Cannot read camera info, keeping the defaults for OV5647
+mmal: mmal_vc_component_create: failed to create component 'vc.ril.camera' (1:ENOMEM)
+mmal: mmal_component_create_core: could not create component 'vc.ril.camera' (1)
+mmal: Failed to create camera component
+mmal: main: Failed to create camera component
+mmal: Camera is not detected. Please check carefully the camera module is installed correctly
+
+ensure camera cable is connected correctly
+
+pi@raspberrypi: sudo ./mlx90640_install.sh
+encounters several errors
+
+
+
+
