@@ -1,6 +1,7 @@
 #!/bin/bash
 
-. common.sh
+mcwd="$(dirname "$(readlink -f "$0")")"
+source $mcwd/common.sh
 
 checkroot
 doing_updates

@@ -6,7 +6,7 @@
 export do_updates
 export do_installs
 
-: ${VKCDemos_src:=/home/pi/src/VKCDemos}
+: ${VKCDemos_src:="$(dirname "$(dirname "$(readlink -f "$0")")")"}
 : ${pyvenv_dir:=/home/pi/vkc-demo}
 
 export VKCDemos_src

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-. common.sh
+
+mcwd="$(dirname "$(readlink -f "$0")")"
+source $mcwd/common.sh
 
 : ${use_whl:=true}
 export use_whl
